@@ -1,12 +1,8 @@
-.PHONY: all compile clean doc
+PROJECT = edown
 
-all: compile
+ERLC_OPTS = +debug_info +warn_export_all +warn_export_vars +warn_shadow_vars +warn_obsolete_guard
 
-compile:
-	./rebar compile
+PLT_APPS = hipe sasl mnesia crypto compiler syntax_tools
+DIALYZER_OPTS = -Werror_handling -Wrace_conditions -Wunmatched_returns | fgrep -v -f ./dialyzer.ignore-warning
 
-clean:
-	./rebar clean
-
-doc: compile
-	./make_doc
+include erlang.mk
